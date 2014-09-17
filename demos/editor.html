@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blink sketch flasher</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <textarea rows="27" cols="80" id="editor">
+/*
+Blink
+Turns on an LED on for one second, then off for one second, repeatedly.
+
+This example code is in the public domain.
+*/
+
+// Pin 13 has an LED connected on most Arduino boards.
+// give it a name:
+int led = 13;
+
+// the setup routine runs once when you press reset:
+void setup() {
+// initialize the digital pin as an output.
+pinMode(led, OUTPUT);
+}
+
+// the loop routine runs over and over again forever:
+void loop() {
+digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+delay(1000);               // wait for a second
+digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
+delay(1000);               // wait for a second
+}
+    </textarea>
+
+    <br/>
+
+    <select id="cb_cf_boards"></select>
+    <button id="cb_cf_verify_btn" class="btn btn-success">Compile the Code!</button>
+    <p id="cb_cf_operation_output"></p>
+
+    <label> Event messages: </label>
+    <div id="event_msg"></div>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://codebender.cc/embed/compilerflasher.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+        function getFiles(){
+            return {"sketch.ino": $("#editor").val() }
+        }
+
+        $(document).ready(function(){
+            compilerflasher = new compilerflasher(getFiles);
+
+            compilerflasher.on("pre_verify", function(){
+                $("#event_msg").append('pre_verify event fired!<br/><br/>')
+            });
+            compilerflasher.on("verification_succeed", function(binary_size){
+                $("#event_msg").append('verification_succeed event fired! Sketch size: '+binary_size+"<br/><br/>")
+            });
+            compilerflasher.on("verification_failed", function(error_output){
+                $("#event_msg").append("verification_failed event fired! \nCompilation error: <pre>"+error_output+"</pre><br/><br/>")
+            });
+        });
+
+
+    </script>
+
+</body>
+</html>
