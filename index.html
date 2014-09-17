@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Compilerflasher : Documentation for cf">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Compilerflasher</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/albaltas/compilerflasher">View on GitHub</a>
+
+          <h1 id="project_title">Compilerflasher</h1>
+          <h2 id="project_tagline">Documentation for cf</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/albaltas/compilerflasher/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/albaltas/compilerflasher/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="codebender-compilerflasher" class="anchor" href="#codebender-compilerflasher"><span class="octicon octicon-link"></span></a>codebender compilerflasher</h1>
+
+<p>codebender compilerflasher is a javascript library that enables compiling Arduino sketches, and flashing the binaries to Arduino &amp; Arduino compatible devices through the browser using the codebender.cc plugin for Chrome &amp; Firefox.</p>
+
+<h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p>To use the script, just including the following line of code:</p>
+
+<p><code>&lt;script src="https://codebender.cc/embed/compilerflasher.js" type="text/javascript"&gt;&lt;/script&gt;</code></p>
+
+<h2>
+<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<p>compilerflasher needs jQuery to operate as it should. Also, if you want the select fields described later, to load up with the previously selected option you can also include Lawnchair.</p>
+
+<h2>
+<a name="html-elements" class="anchor" href="#html-elements"><span class="octicon octicon-link"></span></a>HTML Elements</h2>
+
+<p>On the app using compilerflasher.js, you can add any of the following elements:</p>
+
+<p><code>&lt;select id="cb_cf_boards"&gt;&lt;/select&gt;</code></p>
+
+<p>A selection of supported Arduino &amp; Arduino compatible boards. The currently supported boards can be found here.</p>
+
+<p><code>&lt;button id="cb_cf_verify_btn" &gt;&lt;/button&gt;</code></p>
+
+<p>A button that compiles the source code provided to compilerflahser (see Javascript section).</p>
+
+<p><code>&lt;select id="cb_cf_ports"&gt;&lt;/select&gt;</code></p>
+
+<p>A selection of currently available ports. The ports are indentified by the aformentioned browser plugin.</p>
+
+<p><code>&lt;button id="cb_cf_flash_btn"&gt;&lt;/button&gt;</code></p>
+
+<p>A button that first compiles the code, and then uploads the binary of the source code, on the Arduino device connected on the selected port of “cb_cf_ports”.</p>
+
+<p><code>&lt;select id="cb_cf_programmers"&gt; &lt;/select&gt;</code></p>
+
+<p>A selection of supported programmers.</p>
+
+<p><code>&lt;button id="cb_cf_flash_with_prog_btn"&gt;&lt;/button&gt;</code></p>
+
+<p>Button that compiles the code, and then uploads the binary to your board using the selected programmer of “cb_cf_programmers”</p>
+
+<p><code>&lt;select id="cb_cf_baud_rates"&gt;&lt;/select&gt;</code></p>
+
+<p>Selection of supported Baud Rates for connection to the Serial Monitor.</p>
+
+<p><code>&lt;button id="cb_cf_serial_monitor_connect"&gt;&lt;/button&gt;</code></p>
+
+<p>Button that connects to the selected port of “cb_cf_ports” on the selected speed of “cb_cf_baud_rates”, and opens up the serial monitor included in “cb_cf_serial_monitor” .</p>
+
+<p><code>&lt;div id="cb_cf_serial_monitor"&gt;&lt;/div&gt;</code></p>
+
+<p>Div that includes the serial monitor itself, and a textbox and button to send serial data.</p>
+
+<p><code>&lt;p id="cb_cf_operation_output&gt;&lt;/p&gt;</code></p>
+
+<p>Generic compilerflasher text output.</p>
+
+<p>All those elements can be styled to your needs, using either custom stylesheets, or external plug-n-play frameworks like Bootstrap.</p>
+
+<h2>
+<a name="javascript" class="anchor" href="#javascript"><span class="octicon octicon-link"></span></a>Javascript</h2>
+
+<p>In order to make use of all the loaded elements, you have to initialize the compilerflasher class. That can be done with the following line of code:</p>
+
+<p><code>compilerflasher = new compilerflasher(function);</code></p>
+
+<p>Function is a function that you have to implement, and returns the files you want to use for compilation &amp; flashing, on the following format:</p>
+
+<p><code>Object {sketch.ino: "void setup()↵{↵ ↵}↵↵void loop()↵{↵ ↵}↵", header.h: ""})</code></p>
+
+<p>This function is called whenever the files need to be fetched (i.e. before Verification), so you could either return static data, if you want your page to operate like so, or use a function that returns different files every time. </p>
+
+<p>By adding this line of code, button click events are going to be binded with the proper functions automatically.</p>
+
+<h2>
+<a name="events" class="anchor" href="#events"><span class="octicon octicon-link"></span></a>Events</h2>
+
+<p>Compilerflasher.js supports a set of events that can be hooked by your app. Callbacks for each event can be added likeso:</p>
+
+<p><code>compilerflasher.on(eventName, callback);</code></p>
+
+<p>Where eventName is a string included on the list mentioned later, and callback is a function that may, or may not have parameters depending on the event.</p>
+
+<h2>
+<a name="available-events" class="anchor" href="#available-events"><span class="octicon octicon-link"></span></a>Available Events</h2>
+
+<h3>
+<a name="pre_verify" class="anchor" href="#pre_verify"><span class="octicon octicon-link"></span></a>"pre_verify"</h3>
+
+<p>Usage:  <code>compilerflasher.on(“pre_verify”, function(){/*your code here*/});</code></p>
+
+<p>Gets fired before the verification process, when user clicks on the “cb_cf_verify_btn” button.
+Callback of this event takes no parameters.</p>
+
+<h3>
+<a name="verification_succeed" class="anchor" href="#verification_succeed"><span class="octicon octicon-link"></span></a>"verification_succeed"</h3>
+
+<p>Usage: <code>compilerflasher.on(“verification_succeed”, function(binary_size){/*your code here*/});</code></p>
+
+<p>Gets fired upon successful verification. Callback function can take one parameter, which is the compiled binary size in bytes.</p>
+
+<h3>
+<a name="verification_failed" class="anchor" href="#verification_failed"><span class="octicon octicon-link"></span></a>“verification_failed”</h3>
+
+<p>Usage: <code>compilerflasher.on(“verification_failed”, function(error_output){/*your code here*/});</code></p>
+
+<p>Gets fired upon failed verification. Callback function can take one parameter, which is the compiler’s error output.</p>
+
+<h3>
+<a name="pre_flash" class="anchor" href="#pre_flash"><span class="octicon octicon-link"></span></a>"pre_flash"</h3>
+
+<p>Usage: <code>compilerflasher.on(“pre_flash”, function(){/*your code here*/});</code></p>
+
+<p>Gets fired before the flashing process, either when user clicks on the “cb_cf_flash_btn” button, or when user clicks on the “cb_cf_flash_with_prog_btn” button.
+Callback of this event takes no parameters.</p>
+
+<h3>
+<a name="mid_flash" class="anchor" href="#mid_flash"><span class="octicon octicon-link"></span></a>"mid_flash"</h3>
+
+<p>Usage: <code>compilerflasher.on(“mid_flash”, function(size){/*your code here*/});</code></p>
+
+<p>Gets fired in the middle of the flashing process, after the successful compilation of the sketch.
+Callback function can take one parameter, which is the compiled binary size in bytes.</p>
+
+<h3>
+<a name="flash_failed" class="anchor" href="#flash_failed"><span class="octicon octicon-link"></span></a>"flash_failed"</h3>
+
+<p>Usage: <code>compilerflasher.on(“flash_failed”, function(message){/*your code here*/});</code></p>
+
+<p>Gets fired when the flashing proccess fails. Callback can take one parameter, which is the error message.</p>
+
+<h3>
+<a name="flash_succeed" class="anchor" href="#flash_succeed"><span class="octicon octicon-link"></span></a>"flash_succeed"</h3>
+
+<p>Usage: <code>compilerflasher.on(“flash_succeed”, function(message){/*your code here*/});</code></p>
+
+<p>Gets fired when the flashing proccess fails. Takes no parameters.</p>
+
+<h3>
+<a name="plugin_notification" class="anchor" href="#plugin_notification"><span class="octicon octicon-link"></span></a>"plugin_notification"</h3>
+
+<p>Usage: <code>compilerflasher.on(“plugin_notification”, function(message){/*your code here*/});</code></p>
+
+<p>Fired to give your app a generic notification created by our browser plugin. Callback can take one parameter, which is the notification.</p>
+
+<h3>
+<a name="plugin_running" class="anchor" href="#plugin_running"><span class="octicon octicon-link"></span></a>"plugin_running"</h3>
+
+<p>Usage: <code>compilerflasher.on(“plugin_running”, function(){{/*your code here*/});</code></p>
+
+<p>Fired when plugin has finished initializing, and started running without any issues.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Compilerflasher maintained by <a href="https://github.com/albaltas">albaltas</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
