@@ -18,8 +18,8 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/albaltas/compilerflasher">View on GitHub</a>
 
-          <h1 id="project_title">Compilerflasher</h1>
-          <h2 id="project_tagline">Documentation for cf</h2>
+          <h1 id="project_title">codebender compilerflasher</h1>
+          <h2 id="project_tagline">Javascript library for compiling and flashing Arduino sketches from your browser</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/albaltas/compilerflasher/zipball/master">Download this project as a .zip file</a>
@@ -38,16 +38,60 @@
 <p>codebender compilerflasher is a javascript library that enables compiling Arduino sketches, and flashing the binaries to Arduino &amp; Arduino compatible devices through the browser using the codebender.cc plugin for Chrome &amp; Firefox.</p>
 
 <h2>
-<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
-
-<p>To use the script, just including the following line of code:</p>
-
-<p><code>&lt;script src="https://codebender.cc/embed/compilerflasher.js" type="text/javascript"&gt;&lt;/script&gt;</code></p>
-
-<h2>
 <a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h2>
 
-<p>compilerflasher needs jQuery to operate as it should. Also, if you want the select fields described later, to load up with the previously selected option you can also include Lawnchair.</p>
+<h4>jQuery</h4>
+    <p>compilerflasher uses jQuery, this powerful javascript library that makes HTML manipulation simple and easy.</p>
+
+<h4>Lawnchair <i>(optional)</i> </h4>
+    <p>Lawnchair is a simple client side json storage. Compilerflahser uses it to maintain the last chosen board and programmer or port user, and autoselect it upon next page load. If you don't want to use lawnchair, it's fine! Compilerflasher can operate normally without it.</p>
+
+
+
+<h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<h4>Step 1: Include the library</h4>
+
+<p>To use the library, first you have to include jQuery, and the library itself:</p>
+
+<p><code>
+    &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;script src="https://codebender.cc/embed/compilerflasher.js" type="text/javascript"&gt;&lt;/script&gt;
+</code></p>
+
+<h4>Step 2: Add the HTML Elements you need</h4>
+
+<p>Then, on your HTML add any compilerflasher elements you need to use. The full list of the supported html elements is described later. On this example we are going to create a page that compiles a basic arduino sketch. So we need the list of supported boards, the compilation button. and some text ouptut:</p>
+
+      <code>
+
+          &lt;select id="cb_cf_boards"&gt;&lt;/select&gt;<br/>
+          &lt;button id="cb_cf_verify_btn" class="btn btn-success"&gt;Verify code!&lt;/button&gt;<br/>
+          &lt;p id="cb_cf_operation_output"&gt;&lt;/p&gt;
+      </code>
+
+<h4>Step 3: Create your compilerflasher</h4>
+
+<p>On the javacript side, we have to implement a function that returns the code we want to compile on the following format:</p>
+          <p><code>Object {sketch.ino: "void setup()↵{↵ ↵}↵↵void loop()↵{↵ ↵}↵", header.h: ""})</code></p>
+
+          <p>In our case it's this one:</p>
+
+          <code>function getFiles(){
+              return {"sketch.ino": "void setup(){} void loop(){}"}
+              }</code>
+
+<p>And finally, initialize compilerflasher:</p>
+
+          <code>
+              $(document).ready(function(){
+                compilerflasher = new compilerflasher(getFiles);
+              });</code>
+
+
+<h4><a href="demos.html">See some cool demos!</a> </h4>
+
 
 <h2>
 <a name="html-elements" class="anchor" href="#html-elements"><span class="octicon octicon-link"></span></a>HTML Elements</h2>
