@@ -108,6 +108,7 @@
 
 <p>On the app using compilerflasher.js, you can add any of the following elements:</p>
 
+<hr/>
 <p><code>&lt;select id="cb_cf_boards"&gt;&lt;/select&gt;</code></p>
 
 <p>A selection of supported Arduino &amp; Arduino compatible boards. The currently supported boards can be found
@@ -115,48 +116,57 @@
 
 <strong>Preselect a board</strong>
 
+
 <p><code>&lt;select id="cb_cf_boards" data-board="Arduino Uno" &gt;&lt;/select&gt;</code></p>
+
 <p>If your app is board-specific, you can preselect a board by using the data-board attribute. This will cause the board
     selection to be hidden.
 
-    To select Arduino Uno:</p>
 
-
+<hr/>
 <p><code>&lt;button id="cb_cf_verify_btn" &gt;&lt;/button&gt;</code></p>
 
 <p>A button that compiles the source code provided to compilerflasher (see Javascript section).</p>
 
+<hr/>
 <p><code>&lt;select id="cb_cf_ports"&gt;&lt;/select&gt;</code></p>
 
 <p>A selection of currently available ports. The ports are indentified by the aforementioned browser plugin.</p>
 
+<hr/>
 <p><code>&lt;button id="cb_cf_flash_btn"&gt;&lt;/button&gt;</code></p>
 
 <p>A button that first compiles the code, and then uploads the binary of the source code, on the Arduino device
     connected on the selected port of "cb_cf_ports".</p>
 
+<hr/>
 <p><code>&lt;select id="cb_cf_programmers"&gt; &lt;/select&gt;</code></p>
 
 <p>A selection of supported programmers.</p>
 
+<hr/>
 <p><code>&lt;button id="cb_cf_flash_with_prog_btn"&gt;&lt;/button&gt;</code></p>
 
 <p>Button that compiles the code, and then uploads the binary to your board using the selected programmer of
     "cb_cf_programmers"</p>
 
+<hr/>
 <p><code>&lt;select id="cb_cf_baud_rates"&gt;&lt;/select&gt;</code></p>
 
 <p>Selection of supported Baud Rates for connection to the Serial Monitor.</p>
 
+<hr/>
 <p><code>&lt;button id="cb_cf_serial_monitor_connect"&gt;&lt;/button&gt;</code></p>
 
 <p>Button that connects to the selected port of "cb_cf_ports" on the selected speed of "cb_cf_baud_rates", and opens up
     the serial monitor included in "cb_cf_serial_monitor" .</p>
 
+<hr/>
 <p><code>&lt;div id="cb_cf_serial_monitor"&gt;&lt;/div&gt;</code></p>
 
 <p>Div that includes the serial monitor itself, and a textbox and button to send serial data.</p>
 
+<hr/>
 <p><code>&lt;p id="cb_cf_operation_output"&gt;&lt;/p&gt;</code></p>
 
 <p>Generic compilerflasher text output.</p>
@@ -170,9 +180,9 @@
 <p>In order to make use of all the loaded elements, you have to initialize the compilerflasher class. That can be done
     with the following line of code:</p>
 
-<p><code>compilerflasher = new compilerflasher(function);</code></p>
+<p><code>compilerflasher = new compilerflasher(File_Getter);</code></p>
 
-<p>Function is a function that you have to implement, and returns the files you want to use for compilation &amp;
+<p>File_Getter is a function that you have to implement, and returns the files you want to use for compilation &amp;
     flashing, on the following format:</p>
 
 <p><code>Object {sketch.ino: "void setup()↵{↵ ↵}↵↵void loop()↵{↵ ↵}↵", header.h: ""})</code></p>
@@ -181,7 +191,6 @@
     static data, if you want your page to operate like so, or use a function that returns different files every
     time. </p>
 
-<p>By adding this line of code, button click events are going to be binded with the proper functions automatically.</p>
 
 <h2>
     <a name="events" class="anchor" href="#events"><span class="octicon octicon-link"></span></a>Events</h2>
